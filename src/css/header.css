@@ -1,0 +1,13 @@
+.header{
+    color: white;
+}
+
+#logo{
+    font-family: 'glamor';
+    margin: auto;
+    font-size: 150px;
+}
+
+.header-nav{
+    gap: 40px;
+}
