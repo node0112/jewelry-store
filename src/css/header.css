@@ -1,13 +1,42 @@
 .header{
     color: white;
+    padding-top: 40px;
+    justify-content: space-between;
 }
 
 #logo{
     font-family: 'glamor';
     margin: auto;
     font-size: 150px;
+    padding-top: 35vh;
+    text-align: center;
+}
+.logo-subtext{
+    margin-top: -40px;
+    font-size: 40px;
+    font-family: 'Ysabeau office', sans-serif;
 }
 
 .header-nav{
     gap: 40px;
+    font-family: 'Ysabeau Office', sans-serif;
+    max-height: 30px;
+    width: 15%;
+    justify-content: flex-start;
+    transition: all 0.8s ease-in;
+    width: 20%;
+}
+.right-header-nav{
+    justify-content: flex-end !important;
+
+}
+#searchCont{
+    transition: all 0.5s ease-in-out;
+}
+#searchbar{
+    width: 0;
+    transition: all 0.5s ease-in-out;
+    color: white;
+    font-size: 1.1rem;
+    font-family: 'poppins', sans-serif;
 }
