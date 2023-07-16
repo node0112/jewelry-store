@@ -25,7 +25,7 @@ function Header() {
       <div className="left-header-nav header-nav flex">
         <img src={menu} alt="menu" className="nav-link" id='menu' />
       </div>
-      <div id="logo">Earhart
+      <div className="logo">Earhart
       <div className="logo-subtext">
         Wear Your Shine</div></div>
       <div className="right-header-nav header-nav flex">
