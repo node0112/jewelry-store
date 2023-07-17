@@ -5,12 +5,20 @@
   src: url('../assets/Glamor-Medium.ttf');
 }
 
+:root{
+  --black : #171717;
+  --gray : #737373;
+  --red: #F23F3F;
+}
+
 body{
-  padding: 0 50px 0 50px;
   user-select: none;
   cursor: default;
   -webkit-user-select: none;
+  overflow-x: hidden !important;
+  background-color: #F5F5F5;
 }
+
 input{
   background-color: transparent;
   border: none;
@@ -35,4 +43,8 @@ input:focus{
 }
 .cursor{
   cursor: pointer;
+}
+.padding{
+  padding-left: 80px;
+  padding-right: 80px;
 }

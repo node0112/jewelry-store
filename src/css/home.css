@@ -13,8 +13,102 @@
 .overlay{
     width: 100vw;
     height: 100vh;
+    z-index: -1;
     position: absolute;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.391);
 }   
+
+.home-section{
+    justify-content: space-between;
+    width: calc(100vw - 160px);
+    height: 100vh;
+    padding-top: 90px;
+}
+
+.home-card{
+    width: 625px;
+    height: 895px;
+    background-color: gray;
+    border-radius: 40px;
+    padding-bottom: 30px;
+    padding-top: 50px;
+}
+
+.cta-container{
+    position: sticky;
+    bottom: 50px;
+    margin: auto;
+    padding-top: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: 'Ysabeau office', sans-serif;
+}
+.cta-info{
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+.cta-button{
+    padding: 21px 82px;
+    background-color: white;
+    font-size: 30px;
+    transition: all 0.3s ease-out;
+    text-transform: capitalize;
+}
+
+#cta1{
+    background-color: black;
+    color: white;
+}
+#cta2:hover{
+    background-color: black;
+    color: white;
+}
+#cta1:hover{
+    background-color: white;
+    color: black;
+}
+
+.section-title{
+    font-size: 90px;
+    margin-top: 150px;
+}
+
+.home-card-small{
+    width: 460px;
+    height: 460px;
+    background-color: darkgray;
+    margin-right: 50px;
+    border-radius: 20px;
+}
+.home-cards-small-container{
+    width: max-content;
+    height: 460px;
+    overflow-x: hidden;
+    border-radius: 20px;
+    transition: all 0.3s ease-in;
+}
+.cards-wrapper{
+    width: 470px;
+    overflow-x: hidden;
+    height: 460px;
+
+}
+
+.slideshow-info-container{
+    margin-top: 70px;
+}
+
+
+.slide-pos{
+    width: 530px;
+    background-color: #C6C6C6;
+    height: 3px;
+}
+.slider-bar{
+    width: calc(530px/4);
+    height: 3px;
+    background-color: var(--black);
+    transition: all 0.3s ease-in;
+}
