@@ -1,8 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import bgVideo  from '../assets/bgVid.mp4'
 import '../css/home.css'
+import arrow from '../assets/arrow.svg'
 
-function    Home() {
+function  Home() {
+
+  const [sliderPos, setSliderPos] = useState(0) 
+  const [barCount, setbarCount] = useState(0)
+  const [barPosition, setBarPosition] = useState('')
+  const [currMargin, setCurrMargin] = useState(0)
+
+
+
+  async function slide(action){
+    const barPosMargin = document.querySelector('.slider-bar').style
+    if(action === 'right'){
+      setCurrMargin(currMargin => currMargin + 132.5 )
+      setSliderPos((sliderPos)=> sliderPos + 500)
+    }
+    else if(action === 'left'){
+      setSliderPos((sliderPos)=> sliderPos - 500)
+      setCurrMargin(currMargin => currMargin - 132.5 )
+    }
+  }
+  useEffect(()=>{
+    console.log(sliderPos)
+  }, [sliderPos])
   return (
     <div className='home-container'>
         <div className="vid-bg"> 
@@ -28,7 +51,7 @@ function    Home() {
 
           <div className="cards-slideshow flex column vertical">
             <div className="cards-wrapper">
-              <div className="home-cards-small-container flex">
+              <div className="home-cards-small-container flex" style={{transform:'translateX(-' + sliderPos + 'px)'}} >
                 <div className="home-card-small">
                   <img src="" alt="" className="card-bg" />
                   <div className="card-link"></div>
@@ -39,15 +62,18 @@ function    Home() {
                 <div className="home-card-small">
                 </div>
                 <div className="home-card-small">
+                  <img src="" alt="" className="card-bg" />
+                  <div className="card-link"></div>
+                  <div className="card-info"></div>
                 </div>
               </div>
             </div>
-            <div className="slideshow-info-container">
-              <div className="slide-left"></div>
+            <div className="slideshow-info-container flex vertical">
+            { sliderPos > 0 ? <img src={arrow} style={{transform: 'rotate(180deg)'}} className="slide-left" onClick={()=>{slide('left')}} /> : null }
               <div className="slide-pos">
-                <div className="slider-bar" />
+                <div className="slider-bar" style={{marginLeft: currMargin + 'px'}}/>
               </div>
-              <div className="slide-right"></div>
+             { sliderPos < 1500 ? <img src={arrow} className="slide-right" onClick={()=>{slide('right')}} /> : null}
             </div>
           </div>
         </section>

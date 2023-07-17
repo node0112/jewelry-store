@@ -7,16 +7,17 @@ function Header() {
 
   const [searchOpen, setSearchOpen] = useState(false)
   async function searchAnimate(){
-    const searchInput = document.getElementById('searchbar').style
+    const searchInput = document.getElementById('searchbar')
     const searchCont = document.getElementById('searchCont').style
     if(searchOpen){
       searchCont.width = '30px'
-      searchInput.width = '0%'
+      searchInput.style.width = '0%'
       setSearchOpen(false)
     }
     else{
       searchCont.width = '200px'
-      searchInput.width = '100%'
+      searchInput.style.width = '100%'
+      searchInput.select()
       setSearchOpen(true)
     }
 }
