@@ -2,30 +2,58 @@ import React, { useEffect, useState } from 'react'
 import bgVideo  from '../assets/bgVid.mp4'
 import '../css/home.css'
 import arrow from '../assets/arrow.svg'
+import earrings from '../assets/images/earrings.jpg'
 
 function  Home() {
 
   const [sliderPos, setSliderPos] = useState(0) 
   const [barCount, setbarCount] = useState(0)
   const [barPosition, setBarPosition] = useState('')
+  const [cardID, setCardID] = useState(1) //used to make other cards not in view have a opacity of 0.5
   const [currMargin, setCurrMargin] = useState(0)
 
 
 
   async function slide(action){
-    const barPosMargin = document.querySelector('.slider-bar').style
+    document.querySelector('.card-in-view').classList.remove('card-in-view') //make current card slightly less opaque
+
     if(action === 'right'){
+      setCardID(cardID => cardID + 1)
       setCurrMargin(currMargin => currMargin + 132.5 )
-      setSliderPos((sliderPos)=> sliderPos + 500)
+      setSliderPos((sliderPos)=> sliderPos + 613)
     }
+    
     else if(action === 'left'){
-      setSliderPos((sliderPos)=> sliderPos - 500)
+      setCardID(cardID => cardID - 1)
+      setSliderPos((sliderPos)=> sliderPos - 613)
       setCurrMargin(currMargin => currMargin - 132.5 )
     }
   }
+
+  function cardHover(card){
+
+  }
+
   useEffect(()=>{
-    console.log(sliderPos)
-  }, [sliderPos])
+    document.getElementById(cardID.toString()).classList.add('card-in-view') //add opacity to new card
+  },[cardID])
+
+  useEffect(()=>{
+    const smallCards = document.querySelectorAll('.home-card-small')
+    smallCards.forEach(card =>{
+      card.addEventListener('mouseover', ()=>{ //used for hover effect
+        card.querySelector('.card-info').style.marginBottom = '0'
+        card.querySelector('.card-info').style.opacity = '1'
+      })
+      card.addEventListener('mouseout', ()=>{
+        card.querySelector('.card-info').style.marginBottom = '-50px'
+        card.querySelector('.card-info').style.opacity = '0'
+      })
+    })
+  },[])
+
+
+
   return (
     <div className='home-container'>
         <div className="vid-bg"> 
@@ -51,29 +79,42 @@ function  Home() {
 
           <div className="cards-slideshow flex column vertical">
             <div className="cards-wrapper">
-              <div className="home-cards-small-container flex" style={{transform:'translateX(-' + sliderPos + 'px)'}} >
-                <div className="home-card-small">
+              <div className="home-cards-small-container flex vertical" style={{transform:'translateX(-' + sliderPos + 'px)'}} >
+                <div className="home-card-small cursor card-in-view" id='1' >
+                  <div className="gradient" />
+                  <img src={earrings} alt="" className="card-bg" />
+                  <div className="card-title">Rings and earrings</div>
+                  <div className="card-info">For Him and Her, made with love and passion from our master craftmen & craftwomen</div>
+                </div>
+                <span className="sep-line" />
+                <div className="home-card-small cursor" id='2'>
+                  <div className="gradient" />
+                  <img src={earrings} alt="" className="card-bg" />
+                  <div className="card-title">Rings and earrings</div>
+                  <div className="card-info">For Him and Her, made with love and passion from our master craftmen & craftwomen</div>
+                </div>
+                <span className="sep-line" />
+                <div className="home-card-small cursor" id='3'>
+                  <div className="gradient" />
+                  <img src={earrings} alt="" className="card-bg" />
+                  <div className="card-title">Rings and earrings</div>
+                  <div className="card-info">For Him and Her, made with love and passion from our master craftmen & craftwomen</div>
+                </div>
+                <span className="sep-line" />
+                <div className="home-card-small cursor" id='4'>
                   <img src="" alt="" className="card-bg" />
-                  <div className="card-link"></div>
-                  <div className="card-info"></div>
-                </div>
-                <div className="home-card-small">
-                </div>
-                <div className="home-card-small">
-                </div>
-                <div className="home-card-small">
-                  <img src="" alt="" className="card-bg" />
+                  <div className="gradient" />
                   <div className="card-link"></div>
                   <div className="card-info"></div>
                 </div>
               </div>
             </div>
-            <div className="slideshow-info-container flex vertical">
-            { sliderPos > 0 ? <img src={arrow} style={{transform: 'rotate(180deg)'}} className="slide-left" onClick={()=>{slide('left')}} /> : null }
+            <div className="slideshow-info-container flex vertical horizontal" style={{width:'610px'}}>
+            { sliderPos > 0 ? <img src={arrow} style={{transform: 'rotate(180deg)'}} className="slide-left cursor" onClick={()=>{slide('left')}} /> : <div style={{width: '38px', backgroundColor: 'transparent'}} /> }
               <div className="slide-pos">
                 <div className="slider-bar" style={{marginLeft: currMargin + 'px'}}/>
               </div>
-             { sliderPos < 1500 ? <img src={arrow} className="slide-right" onClick={()=>{slide('right')}} /> : null}
+             { sliderPos < 1500 ? <img src={arrow} className="slide-right cursor" onClick={()=>{slide('right')}} /> : <div style={{width: '38px', backgroundColor: 'transparent'}} />}
             </div>
           </div>
         </section>
