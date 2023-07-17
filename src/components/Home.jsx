@@ -3,6 +3,7 @@ import bgVideo  from '../assets/bgVid.mp4'
 import '../css/home.css'
 import arrow from '../assets/arrow.svg'
 import earrings from '../assets/images/earrings.jpg'
+import bracelets from '../assets/images/bracelets.jpg'
 
 function  Home() {
 
@@ -82,16 +83,16 @@ function  Home() {
               <div className="home-cards-small-container flex vertical" style={{transform:'translateX(-' + sliderPos + 'px)'}} >
                 <div className="home-card-small cursor card-in-view" id='1' >
                   <div className="gradient" />
-                  <img src={earrings} alt="" className="card-bg" />
+                  <img src={earrings} alt="earrings" className="card-bg" />
                   <div className="card-title">Rings and earrings</div>
                   <div className="card-info">For Him and Her, made with love and passion from our master craftmen & craftwomen</div>
                 </div>
                 <span className="sep-line" />
                 <div className="home-card-small cursor" id='2'>
                   <div className="gradient" />
-                  <img src={earrings} alt="" className="card-bg" />
-                  <div className="card-title">Rings and earrings</div>
-                  <div className="card-info">For Him and Her, made with love and passion from our master craftmen & craftwomen</div>
+                  <img src={bracelets} alt="bracelets" className="card-bg" />
+                  <div className="card-title">Bracelets</div>
+                  <div className="card-info">A perfect fit for your wrist available in the most exquisite of metals known to mankind</div>
                 </div>
                 <span className="sep-line" />
                 <div className="home-card-small cursor" id='3'>
