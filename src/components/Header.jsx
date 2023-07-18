@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import '../css/header.css'
 import menu from '../assets/menu.svg'
 import search from '../assets/search.svg'
@@ -20,11 +20,28 @@ function Header() {
       searchInput.select()
       setSearchOpen(true)
     }
-}
+  }
+
+  useEffect(() => {
+    const body = document.querySelector('body')
+    body.addEventListener('scroll', data =>{
+      console.log('data')
+    })
+  }, [])
+
+  function openSidebar(){
+    const sidebar = document.querySelector('.sidebar')
+    const blur = document.querySelector('.background-blur')
+    blur.style.zIndex = '998'
+    blur.style.opacity = '1'
+    sidebar.style.left = '0px'
+    document.querySelector('body').style.overflowY = 'hidden'
+  }
+  
   return (
     <div className='header flex'>
       <div className="left-header-nav header-nav flex">
-        <img src={menu} alt="menu" className="nav-link" id='menu' />
+        <img src={menu} alt="menu" className="nav-link cursor" id='menu' onClick={openSidebar} />
       </div>
       <div className="logo">Earhart
       <div className="logo-subtext">

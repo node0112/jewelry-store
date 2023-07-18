@@ -39,7 +39,7 @@ function  Home() {
     document.getElementById(cardID.toString()).classList.add('card-in-view') //add opacity to new card
   },[cardID])
 
-  useEffect(()=>{
+  useEffect(()=>{ //add effect to the document during intial load
     const smallCards = document.querySelectorAll('.home-card-small')
     smallCards.forEach(card =>{
       card.addEventListener('mouseover', ()=>{ //used for hover effect

@@ -1,0 +1,100 @@
+.sidebar{
+    width: 440px;
+    height: 100vh;
+    background-color: whitesmoke;
+    transition: all 0.3s ease-in-out;
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-family: 'Ysabeau office', sans-serif;
+    z-index: 999;
+    transition: all 0.5s;
+}
+.sidebar-container-main{
+    transition: all 0.2s;
+}
+.sidebar-wrapper{
+    width: 270px;
+    height: 715px;
+    margin-left: 80px;
+    transition: all 0.3s;
+    overflow-x: hidden;
+}
+.drawers-wrapper{
+    height: 715px;
+    transition: all 0.3s ease-in;
+}
+.drawer-title{
+    font-size: 40px;
+}
+.sidebar-drawer{
+    width: 270px;
+    height: 715px;
+    transition: all 0.5s;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    display: none;
+}
+.sidebar-link, .drawer-link{
+    font-size: 25px;
+    transition: all 0.3s;
+    display: inline-block;
+    position: relative;
+    width: max-content;
+    cursor: pointer;
+}
+.sidebar-link:hover, .drawer-link:hover{
+    color: var(--red);
+}
+.sidebar-link:after, .drawer-link:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -7px;
+    left: 0;
+    background-color: var(--red);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+.sidebar-link:hover:after, .drawer-link:hover:after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  #sidebar-back{
+    height: 38px;
+    width: 38px;
+    position: absolute;
+    top: calc(50vh - 19px);
+    left: 15px;
+    transition: all 0.5s;
+   
+}
+
+#sidebar-back:hover{
+    left: 5px;
+    padding-right: 10px;
+}
+
+.sidebar-sep{
+    width: 270px;
+    height: 2px;
+    background-color: var(--black);
+}
+
+.account-link{
+    color: var(--gray);
+    transition: all 0.3s;
+    font-size: 20px;
+}
+.account-link:hover{
+    color: var(--black);
+}
+
+.drawer-show{
+    display: flex !important;
+}
