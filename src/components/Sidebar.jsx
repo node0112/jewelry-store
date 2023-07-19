@@ -31,7 +31,6 @@ function Sidebar({closeSidebar}){
       link.addEventListener('mouseover', ()=>{
         const drawerToShow = link.textContent.toLowerCase()
         const drawer = document.getElementById(drawerToShow)
-        console.log(drawer)
         const showing = document.querySelector('.drawer-show') //remove any existing drawer
         if(showing) showing.classList.remove('drawer-show')
         drawer.classList.add('drawer-show')
@@ -73,7 +72,44 @@ function Sidebar({closeSidebar}){
                 <div className="drawer-link">Sabato De Sarno</div>
                 <div className="drawer-link">Tom Ford</div>
               </div>
-              
+              <div id="send a gift" className="sidebar-drawer">
+                <div className="drawer-title">Gifting Options</div>
+                <div className="drawer-link">Add a gift wrap</div>
+                <div className="drawer-link">Gift Boxes</div>
+                <div className="drawer-link">Gift Bags</div>
+              </div>
+              <div id="boutiques" className="sidebar-drawer">
+                <div className="drawer-title">Find A Boutique</div>
+                <div className="drawer-link">India</div>
+                <div className="drawer-link">United States</div>
+                <div className="drawer-link">France</div>
+                <div className="drawer-link">Germany</div>
+                <div className="drawer-link">Australia</div>
+                <div className="drawer-link">U.A.E</div>
+              </div>
+              <div id="customized jewelry" className="sidebar-drawer">
+                <div className="drawer-title">Custom Made For You</div>
+                <div className="drawer-link">Watches</div>
+                <div className="drawer-link">Bracelets</div>
+                <div className="drawer-link">Rings</div>
+                <div className="drawer-link">Handbags</div>
+                <div className="drawer-link">Contact Us For More</div>
+              </div>
+              <div id="valuable metals pricing" className="sidebar-drawer">
+                <div className="drawer-title">Our Rates For The Day</div>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                  <a className="drawer-link" href='https://goldprice.org/gold-price-usa.html' target='blank'>Gold: </a>
+                  <div style={{fontSize: '20px'}}>63.67</div>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                  <div className="drawer-link" >Platinum: </div>
+                  <div style={{fontSize: '20px'}}>31.40</div>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                  <div className="drawer-link" >Silver: </div>
+                  <div style={{fontSize: '20px'}}>0.81</div>
+                </div>
+              </div>
             </div>
         </div>
     </div>

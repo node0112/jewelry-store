@@ -59,6 +59,7 @@ function  Home() {
     <div className='home-container'>
         <div className="vid-bg"> 
             <video src={bgVideo} autoPlay={true} loop={true} muted={true} style={{width: '100vw', height: '100vh', objectFit: 'cover'}}/>
+            <div className="home-main-text">Jewelry For Everyone</div>
             <div className="overlay"></div>
         </div>
         <section className='home-section flex padding' style={{marginTop: '100vh'}}>

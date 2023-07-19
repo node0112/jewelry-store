@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import './css/reset.css'
 import Home from './components/Home'
@@ -17,6 +17,7 @@ function App() {
     }, 500);
     document.querySelector('body').style.overflowY = 'auto'
   }
+
   return (
     <>
       <Header />

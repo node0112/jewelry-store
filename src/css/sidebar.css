@@ -5,7 +5,7 @@
     transition: all 0.3s ease-in-out;
     position: fixed;
     top: 0;
-    left: 0;
+    left: -450px;
     font-family: 'Ysabeau office', sans-serif;
     z-index: 999;
     transition: all 0.5s;
