@@ -1,10 +1,14 @@
 import React, { useState,useEffect } from 'react'
 import useDetectScroll from "@smakss/react-scroll-direction";
 import '../css/header.css'
-import menu from '../assets/menu.svg'
-import search from '../assets/search.svg'
 import gsap from 'gsap'
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+//assets
+import menu from '../assets/menu.svg'
+import menuInvert from '../assets/menu-invert.svg'
+import search from '../assets/search.svg'
+import searchInvert from '../assets/search-invert.svg'
 
 function Header() {
   gsap.registerPlugin(ScrollTrigger)
@@ -49,12 +53,16 @@ function Header() {
 
   useEffect(() => { //hide and show header
     const header = document.querySelector('.header')
-    const headerLogos = document.querySelectorAll('.nav-link')
+    const logosOg = document.querySelectorAll('.uninvert')
+    const logosInverted = document.querySelectorAll('.invert')
     if(scrollDir === 'up'){
       header.style.top = '0px'
       header.classList.add('header-open')
-      headerLogos.forEach(logo =>{
-        logo.style.filter = 'invert(0%) sepia(99%) saturate(17%) hue-rotate(329deg) brightness(104%) contrast(100%);'
+      logosOg.forEach(logo =>{
+        logo.style.display = 'none'
+      })
+      logosInverted.forEach(logo =>{
+        logo.style.display = 'block'
       })
     }
     else{
@@ -98,7 +106,16 @@ function Header() {
     //turn header back to orginial state on the top of the page
     window.addEventListener("scroll", function(){
       if(window.scrollY==0){
+        const logosOg = document.querySelectorAll('.uninvert')
+        const logosInverted = document.querySelectorAll('.invert')
         document.querySelector('.header').classList.remove('header-open')
+
+        logosOg.forEach(logo =>{ //change logos back to white
+          logo.style.display = 'block'
+        })
+        logosInverted.forEach(logo =>{
+          logo.style.display = 'none'
+        })
       }
     });
   }, [])
@@ -108,7 +125,8 @@ function Header() {
   return (
     <div className='header flex'>
       <div className="left-header-nav header-nav flex">
-        <img src={menu} alt="menu" className="nav-link cursor"  id='menu' onClick={openSidebar} />
+        <img src={menu} alt="menu" className="uninvert cursor"  id='menu' onClick={openSidebar} />
+        <img src={menuInvert} alt="menu" className="invert cursor"  id='menu' onClick={openSidebar} />
       </div>
       <div className="logo">Earhart
       <div className="logo-subtext">
@@ -116,7 +134,8 @@ function Header() {
       <div className="right-header-nav header-nav flex">
         <div className="nav-link">Boutiques</div>
         <div className="flex" id='searchCont' style={{gap: '10px', width: '30px'}}>
-          <img className="nav-link flex cursor" onClick={searchAnimate} src={search} />
+          <img className="nav-link flex cursor uninvert" onClick={searchAnimate} src={search} />
+          <img className="nav-link flex cursor invert" onClick={searchAnimate} src={searchInvert} />
           <input type="text" id='searchbar'/>
         </div>
       </div>

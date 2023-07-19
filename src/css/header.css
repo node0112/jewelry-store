@@ -11,11 +11,11 @@
     z-index: 10;
 }
 .header-open{
-    color: red;
+    color: var(--red);
     background-color: whitesmoke;
 }
-.nav-link{
-    filter: invert(0%) sepia(99%) saturate(17%) hue-rotate(329deg) brightness(100%) contrast(100%);;
+.invert{
+    display: none;
 }
 .logo{
     font-family: 'glamor';
