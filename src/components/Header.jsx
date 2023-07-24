@@ -135,7 +135,7 @@ function Header() {
         <div className="nav-link">Boutiques</div>
         <div className="flex" id='searchCont' style={{gap: '10px', width: '30px'}}>
           <img className="nav-link flex cursor uninvert" onClick={searchAnimate} src={search} />
-          <img className="nav-link flex cursor invert" onClick={searchAnimate} src={searchInvert} />
+          <img className=" cursor invert" onClick={searchAnimate} src={searchInvert} />
           <input type="text" id='searchbar'/>
         </div>
       </div>

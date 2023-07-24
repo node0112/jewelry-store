@@ -31,7 +31,6 @@
 }   
 
 .home-section{
-    justify-content: space-between;
     width: calc(100vw - 160px);
     height: 100vh;
     padding-top: 90px;
@@ -85,6 +84,7 @@
 .section-title{
     font-size: 90px;
     margin-top: 150px;
+    margin-bottom: 25px;
 }
 
 .cards-slideshow{

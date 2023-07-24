@@ -49,3 +49,10 @@ input:focus{
   padding-left: 80px;
   padding-right: 80px;
 }
+
+.defont{
+  font-family: 'poppins', sans-serif;
+}
+.style-font{
+  font-family: 'Ysabeau office', sans-serif;
+}

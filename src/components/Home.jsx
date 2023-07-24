@@ -62,7 +62,7 @@ function  Home() {
             <div className="home-main-text">Jewelry For Everyone</div>
             <div className="overlay"></div>
         </div>
-        <section className='home-section flex padding' style={{marginTop: '100vh'}}>
+        <section className='home-section flex padding' style={{marginTop: '100vh',justifyContent: 'space-evenly'}}>
           <div className="home-card flex">
             <div className="cta-container">
               <div className="cta-info" style={{color: 'white'}}>Necklaces For Her</div>
@@ -78,7 +78,6 @@ function  Home() {
         </section>
         <section className="home-section padding flex vertical column" style={{justifyContent: 'space-evenly'}}>
           <div className="section-title">Bring The Glamour Home</div>
-
           <div className="cards-slideshow flex column vertical">
             <div className="cards-wrapper">
               <div className="home-cards-small-container flex vertical" style={{transform:'translateX(-' + sliderPos + 'px)'}} >
@@ -119,6 +118,11 @@ function  Home() {
              { sliderPos < 1500 ? <img src={arrow} className="slide-right cursor" onClick={()=>{slide('right')}} /> : <div style={{width: '38px', backgroundColor: 'transparent'}} />}
             </div>
           </div>
+        </section>
+        <section className="home-section padding flex vertical column" style={{height: '350px', marginBottom: '245px'}}>
+          <div className="section-title">Book an appointment</div>
+          <div className="defont" style={{textAlign: 'center',fontSize: '30px', color: 'var(--gray)', maxWidth: '878px', marginBottom: '35px'}}>Visit us at one our boutiques and shop or customize your jewelry with one of our own personal advisors.</div>
+          <div className="sidebar-link style-font" style={{fontSize: '35px'}}>View Available Slots</div>
         </section>
     </div>
   )
