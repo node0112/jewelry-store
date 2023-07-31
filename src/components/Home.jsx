@@ -30,11 +30,7 @@ function  Home() {
       setCurrMargin(currMargin => currMargin - 132.5 )
     }
   }
-
-  function cardHover(card){
-
-  }
-
+  
   useEffect(()=>{
     document.getElementById(cardID.toString()).classList.add('card-in-view') //add opacity to new card
   },[cardID])

@@ -7,6 +7,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 //assets
 import menu from '../assets/menu.svg'
 import menuInvert from '../assets/menu-invert.svg'
+import cart from '../assets/cart.svg'
+import cartInvert from '../assets/cart-invert.svg'
 import search from '../assets/search.svg'
 import searchInvert from '../assets/search-invert.svg'
 
@@ -132,7 +134,10 @@ function Header() {
       <div className="logo-subtext">
         Wear Your Shine</div></div>
       <div className="right-header-nav header-nav flex">
-        <div className="nav-link">Boutiques</div>
+      <div className="flex" style={{gap: '10px', width: '30px'}}>
+          <img className="nav-link flex cursor uninvert" src={cart} />
+          <img className=" cursor invert"  src={cartInvert} />
+        </div>
         <div className="flex" id='searchCont' style={{gap: '10px', width: '30px'}}>
           <img className="nav-link flex cursor uninvert" onClick={searchAnimate} src={search} />
           <img className=" cursor invert" onClick={searchAnimate} src={searchInvert} />
