@@ -2,10 +2,12 @@ import React, { useEffect, useState } from 'react'
 import '../css/sidebar.css'
 import arrow from '../assets/arrowback.svg'
 import deco from '../assets/sidebar-deco.svg'
+import { useNavigate } from 'react-router-dom'
 
-function Sidebar({closeSidebar}){
+function Sidebar({closeSidebar,setPageTitle, setCollectionName}){
 
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const navigate = useNavigate()
 
   async function backPress(){ //handles press of the back arrow in the sidebar
     if(drawerOpen){
@@ -18,7 +20,7 @@ function Sidebar({closeSidebar}){
   }
 }
 
-  useEffect(()=>{
+  useEffect(()=>{ //add eventlisteners for clicking links 
     const links = document.querySelectorAll('.sidebar-link')
     const wrapper = document.querySelector('.drawers-wrapper')
     links.forEach(link =>{
@@ -37,6 +39,16 @@ function Sidebar({closeSidebar}){
       })
     })
   },[])
+
+  async function openProductPage(title, collection){
+    await setCollectionName(collection) //update collection name first since product page refreshes data when the collection changes by calling the getProducts function from app
+    await setPageTitle(title)
+    navigate('/products')
+    setTimeout(() => {
+      closeSidebar()
+    }, 200);
+  }
+  
   return (
     <div className='sidebar flex vertical'>
         <img src={arrow} alt="back" className='cursor' id='sidebar-back'  onClick={backPress}/>
@@ -52,7 +64,7 @@ function Sidebar({closeSidebar}){
                 <div className="sidebar-link cursor">Valuable Metals Pricing</div>
                 <span className="sidebar-sep" />
                 <div className="flex column horizontal" style={{gap: '35px'}}>
-                  <div className="account-link cursor">Account</div>
+                  <div className="account-link cursor" onClick={()=>{navigate('/account')}}>Account</div>
                   <div className="account-link cursor">Appointments</div>
                   <div className="account-link cursor">Orders & History</div>
                   <div className="account-link cursor">Talk With Us</div>
@@ -60,11 +72,11 @@ function Sidebar({closeSidebar}){
               </div>
               <div id="collections" className="sidebar-drawer">
                 <div className="drawer-title">Collections</div>
-                <div className="drawer-link">Rings & Earrings</div>
-                <div className="drawer-link">Bracelets</div>
-                <div className="drawer-link">Watches</div>
-                <div className="drawer-link">Necklaces</div>
-                <div className="drawer-link">Cuff Links</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Rings & Earrings', 'rings')}}>Rings & Earrings</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Bracelets', 'bracelets')}}>Bracelets</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Watches', 'watches')}}>Watches</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Necklaces', 'necklaces')}}>Necklaces</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Cuff Links', 'cuff_links')}}>Cuff Links</div>
               </div>
               <div id="designers" className="sidebar-drawer">
                 <div className="drawer-title">Our Designers</div>

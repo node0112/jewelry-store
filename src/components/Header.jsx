@@ -11,8 +11,10 @@ import cart from '../assets/cart.svg'
 import cartInvert from '../assets/cart-invert.svg'
 import search from '../assets/search.svg'
 import searchInvert from '../assets/search-invert.svg'
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate()
   gsap.registerPlugin(ScrollTrigger)
 
   const [searchOpen, setSearchOpen] = useState(false)
@@ -130,7 +132,7 @@ function Header() {
         <img src={menu} alt="menu" className="uninvert cursor"  id='menu' onClick={openSidebar} />
         <img src={menuInvert} alt="menu" className="invert cursor"  id='menu' onClick={openSidebar} />
       </div>
-      <div className="logo">Earhart
+      <div className="logo" onClick={()=>{navigate('/')}} >Earhart
       <div className="logo-subtext">
         Wear Your Shine</div></div>
       <div className="right-header-nav header-nav flex">
