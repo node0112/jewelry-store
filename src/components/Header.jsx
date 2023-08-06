@@ -137,7 +137,17 @@ function Header() {
         Wear Your Shine</div></div>
       <div className="right-header-nav header-nav flex">
       <div className="flex" style={{gap: '10px', width: '30px'}}>
-          <img className="nav-link flex cursor uninvert" src={cart} />
+          <img className="nav-link flex cursor uninvert" id="cart" src={cart} />
+          <div className="cart-container">
+            <div className="cart-product">
+              <img src="" alt="" className="cart-prod-img" />
+              <div className="flex column">
+                <div className="cart-prod-name">4Big Guys</div>
+                <div className="cart-prod-price">$225</div>
+                <button className="remove-button">Remove</button>
+              </div>
+            </div>
+          </div>
           <img className=" cursor invert"  src={cartInvert} />
         </div>
         <div className="flex" id='searchCont' style={{gap: '10px', width: '30px'}}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../css/productpage.css'
 import banner from '../assets/banner.png'
 
-function ProductPage({getCollection, pageTitle }) {
+function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHomepage }) {
 
     //product view states
     const [price, setPrice] = useState('')
@@ -56,11 +56,12 @@ function ProductPage({getCollection, pageTitle }) {
         setName(product.name)
         setDescription(product.description)
         document.getElementById('product-view-image').src = product.image
+        setProductId(product.id) //sets product id to  a variable so that it can be added to cart directly
         setViewOpen(true)
     }
 
     useEffect(()=>{ //incase gsap messes up the animation, this is the backup code
-        
+        resetHomepage()
     },[])
 
     useEffect(()=>{
@@ -100,7 +101,7 @@ function ProductPage({getCollection, pageTitle }) {
                     <div className="view-name style-font">{name}</div>
                     <div className="view-price defont">{price}</div>
                     <div className="view-description defont">{description}</div>
-                    <div className="view-cart-button style-font">Add To Cart</div>
+                    <div className="view-cart-button style-font" onClick={addToCart}>Add To Cart</div>
                     <div id="view-close" onClick={()=>{setViewOpen(false)}}>Close</div>
                 </div>
             </div>

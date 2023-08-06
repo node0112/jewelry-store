@@ -7,24 +7,31 @@ import Footer from './components/Footer'
 import Sidebar from './components/Sidebar'
 import ProductPage from './components/ProductPage'
 import { db } from './firebase'
-import { getDocs, collection, addDoc, setDoc, doc  } from "firebase/firestore"; 
+import { getDocs, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, arrayRemove  } from "firebase/firestore"; 
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import Account from './components/Account'
 
 function App() {
 
   const auth = getAuth()
+  const navigate = useNavigate()
+
+  const [pageTitle, setPageTitle] = useState('')
+  const [collectionName, setCollectionName] = useState('')
+  const [productId, setProductId] = useState('')
+  let userLocal = null
 
   function signUp(email, password){
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      //add a cart document in the user collection
+      //create a cart document in the user collection for storing all items in cart
       setDoc(doc(db,'userCart', user.email), {
         cart: []
       })
+      navigate('/')
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -35,6 +42,7 @@ function App() {
   function signOutUser(){
     signOut(auth).then(() => {
       console.log('signed-out')
+      userLocal = null
     }).catch((error) => {
       const errorMessage = error.message
     });
@@ -42,21 +50,40 @@ function App() {
 
   function signIn(email, password){
     signInWithEmailAndPassword(auth, email, password).then(user =>{
-      console.log(user)
+      navigate('/')
+      userLocal = user
     }).catch(err =>{
       console.log(err.message)
     })
   }
-  
-  onAuthStateChanged(auth, (user) => { //checks for active users
+
+  onAuthStateChanged(auth, (user) => { //checks if user is signed in
     if (user) {
-      console.log(user.email)
-      const uid = user.uid;
-      // ...
+      userLocal = user
     } else {
       console.log('signed-out')
     }
   });
+
+  async function addToCart(){
+    if(userLocal){
+      const userDoc = doc(db, 'userCart', userLocal.email) //find ref to the doc that we are adding the product id to 
+      await updateDoc(userDoc, {
+        cart: arrayUnion(productId) //array union function adds an item to the cart array without overwriting the whole document
+      })
+      console.log('done')
+    }
+    else{
+      navigate('/account')
+    }
+  }
+
+  async function removeFromCart(id){ //called from the cart preview box on the top of the screen
+    const userDoc = doc(db, 'userCart', user.email) //find ref to the doc that we are adding the product id to 
+    await updateDoc(userDoc, {
+      cart: arrayRemove(id)
+    })
+  }
 
   function resetHomepage(){ //ued to resize header and make subtext Appear on the homepage
     const logo = document.querySelector('.logo')
@@ -66,8 +93,7 @@ function App() {
     document.querySelector('.logo-subtext').style.opacity = '0'
     }
 
-  const [pageTitle, setPageTitle] = useState('')
-  const [collectionName, setCollectionName] = useState('')
+  
 
   async function getCollection(){
   if(collectionName){
@@ -100,21 +126,19 @@ function App() {
     document.querySelector('body').style.overflowY = 'auto'
   }
 
-  return (
+  return(
     <>
-    <BrowserRouter>
-      <Header />
-      <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName} />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle}/>  }/>
-        <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOut} signIn={signIn} />} />
-      </Routes>
-      <div className="background-blur" onClick={closeSidebar}/>
-      <Footer />
-    </BrowserRouter>
+        <Header />
+        <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName} />
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProductId={setProductId} addToCart={addToCart} />  }/>
+          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOut} signIn={signIn} />} />
+        </Routes>
+        <div className="background-blur" onClick={closeSidebar}/>
+        <Footer />
     </>
   )
-}
+  }
 
 export default App
