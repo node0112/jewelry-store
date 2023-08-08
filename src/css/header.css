@@ -71,6 +71,7 @@
     right: 0;
     top: 10vh;
     color: var(--black);
+    border-radius: 20px;
 }
 .cart-product{
     width: 400px;

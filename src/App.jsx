@@ -21,7 +21,7 @@ function App() {
   const [pageTitle, setPageTitle] = useState('')
   const [collectionName, setCollectionName] = useState('')
   const [productId, setProductId] = useState('')
-  let userLocal = null
+  const [locUser,setLocUser] = useState(null)
 
   function signUp(email, password){
     createUserWithEmailAndPassword(auth, email, password)
@@ -29,7 +29,8 @@ function App() {
       const user = userCredential.user;
       //create a cart document in the user collection for storing all items in cart
       setDoc(doc(db,'userCart', user.email), {
-        cart: []
+        cart: [],
+        orders: {}
       })
       navigate('/')
     })
@@ -42,7 +43,7 @@ function App() {
   function signOutUser(){
     signOut(auth).then(() => {
       console.log('signed-out')
-      userLocal = null
+      setLocUser(null)
     }).catch((error) => {
       const errorMessage = error.message
     });
@@ -51,23 +52,25 @@ function App() {
   function signIn(email, password){
     signInWithEmailAndPassword(auth, email, password).then(user =>{
       navigate('/')
-      userLocal = user
+      setLocUser(user)
+      console.log('called')
     }).catch(err =>{
       console.log(err.message)
     })
   }
 
-  onAuthStateChanged(auth, (user) => { //checks if user is signed in
-    if (user) {
-      userLocal = user
-    } else {
-      console.log('signed-out')
-    }
-  });
-
+  useEffect(()=>{
+    onAuthStateChanged(auth, (currentUser) => { //checks if user is signed in
+      console.log(currentUser)
+      if(currentUser){
+        setLocUser(currentUser)
+      }
+    });
+  },[])
+  
   async function addToCart(){
-    if(userLocal){
-      const userDoc = doc(db, 'userCart', userLocal.email) //find ref to the doc that we are adding the product id to 
+    if(locUser){
+      const userDoc = doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
       await updateDoc(userDoc, {
         cart: arrayUnion(productId) //array union function adds an item to the cart array without overwriting the whole document
       })
@@ -85,6 +88,15 @@ function App() {
     })
   }
 
+  async function getCart(){ //get all products added to the cart
+    if(locUser){
+      const userDoc = doc(db, 'userCart', user.email)
+      const data = userDoc.data()
+      console.log(data.cart)
+    }
+  }
+
+
   function resetHomepage(){ //ued to resize header and make subtext Appear on the homepage
     const logo = document.querySelector('.logo')
     logo.style.paddingTop = '0'
@@ -98,12 +110,10 @@ function App() {
   async function getCollection(){
   if(collectionName){
       try { const data = await getDocs(collection(db, collectionName)) //make a connection to that collection 
-      console.log(data.docs)
       const filteredDocs  = data.docs.map((doc)=>({
           ...doc.data(),
           id: doc.id
         })) //to get only the documents form th3e given data
-      console.log(filteredDocs)
       return filteredDocs
       }
       catch (err){
@@ -133,7 +143,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProductId={setProductId} addToCart={addToCart} />  }/>
-          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOut} signIn={signIn} />} />
+          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} />} />
         </Routes>
         <div className="background-blur" onClick={closeSidebar}/>
         <Footer />
