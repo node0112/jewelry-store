@@ -61,7 +61,6 @@ function App() {
 
   useEffect(()=>{
     onAuthStateChanged(auth, (currentUser) => { //checks if user is signed in
-      console.log(currentUser)
       if(currentUser){
         setLocUser(currentUser)
       }
@@ -82,7 +81,7 @@ function App() {
   }
 
   async function removeFromCart(id){ //called from the cart preview box on the top of the screen
-    const userDoc = doc(db, 'userCart', user.email) //find ref to the doc that we are adding the product id to 
+    const userDoc = doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
     await updateDoc(userDoc, {
       cart: arrayRemove(id)
     })
@@ -143,7 +142,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProductId={setProductId} addToCart={addToCart} />  }/>
-          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} />} />
+          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} />} />
         </Routes>
         <div className="background-blur" onClick={closeSidebar}/>
         <Footer />

@@ -1,0 +1,84 @@
+.account-input-container{
+    gap: '20px';
+    margin-bottom: '50px';
+    width: '400px';
+    justify-content: 'space-between'
+}
+.account-button{
+    width: 200px;
+    padding: 15px;
+    background-color: var(--black);
+    color: whitesmoke;
+    transition: all 0.3s;
+    cursor: pointer;
+    border: none;
+    border-radius: 15px;
+    font-size: 25px;
+}
+.account-button:hover{
+    color: var(--red);
+}
+.acc-inp{
+    font-size: 25px;
+    font-family: 'ysabeau office', sans-serif;
+}
+
+
+#acc-hero{
+    width: 50vw;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 10vh;
+    right: 0;
+}
+
+/* order styling  */
+.order{
+    width: 100%;
+    height: 120px;
+    border: 3px solid transparent;
+    padding: 15px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.order:hover{
+    border: 3px solid black;
+}
+.order-img{
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    margin-right: 21px;
+    border: none;
+}
+
+.order-details-container{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.order-name{
+    font-size: 35px;
+    font-family: 'ysabeau office', 'poppins', sans-serif;
+}
+.order-id{
+    font-size: 15px;
+    color: var(--gray);
+}
+.order-date{
+    font-family: 'ysabeau office', 'poppins', sans-serif;
+}
+
+.price{
+    font-size: 25px;
+    font-family: 'poppins', sans-serif;
+    font-weight: lighter;
+}
+.paid-status{
+    color: yellowgreen;
+    font-family: 'poppins', sans-serif;
+}
