@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import '../css/account.css'
-import hero from '../assets/images/acc-img.jpg'
+import hero from '../assets/images/acc-image.jpg'
 
 function Account({signUp, resetHomepage, signOut, signIn, locUser }) {
 
@@ -126,12 +126,12 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser }) {
                     </div>
                 </div>
             </div> :  
-            <div style={{ gap: '50px'}} className='flex column' >
+            <div className='flex column' >
                 <div className="flex account-input-container" >
                     <label htmlFor="email" className='defont' style={{fontSize: '35px'}} >Email:</label>
                     <input type="email" id='email'  className='acc-inp' min='7' style={{width: '200px'}} />
                 </div>
-                <div className="flex" style={{gap: '20px'}}>
+                <div className="flex account-input-container" >
                     <label htmlFor="password" className='defont' style={{fontSize: '35px'}} >Password: </label>
                     <input type="password" minLength='5' id='password' className='acc-inp'  style={{width: '200px'}} />
                 </div>

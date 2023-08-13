@@ -11,11 +11,13 @@ import cart from '../assets/cart.svg'
 import cartInvert from '../assets/cart-invert.svg'
 import search from '../assets/search.svg'
 import searchInvert from '../assets/search-invert.svg'
+import closeLogo from '../assets/closecircle.svg'
 import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const navigate = useNavigate()
   gsap.registerPlugin(ScrollTrigger)
+  const tempLink = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&token=f8e0472f-b644-4641-94bf-0a93d38545f0'
 
   const [searchOpen, setSearchOpen] = useState(false)
   async function searchAnimate(){
@@ -138,15 +140,32 @@ function Header() {
       <div className="right-header-nav header-nav flex">
       <div className="flex" style={{gap: '10px', width: '30px'}}>
           <img className="nav-link flex cursor uninvert" id="cart" src={cart} />
-          <div className="cart-container">
-            <div className="cart-product">
-              <img src="" alt="" className="cart-prod-img" />
-              <div className="flex column">
+          <div className="cart-container flex column">
+          <div className="cart-product">
+              <img src={tempLink} alt="" className="cart-prod-img" />
+              <div className="prod-info flex column">
                 <div className="cart-prod-name">4Big Guys</div>
-                <div className="cart-prod-price">$225</div>
-                <button className="remove-button">Remove</button>
+                <div className="cart-prod-price">$225</div> 
               </div>
+              <img src={closeLogo} className='remove-button' alt="" />
             </div>
+            <div className="cart-product">
+              <img src={tempLink} alt="" className="cart-prod-img" />
+              <div className="prod-info flex column">
+                <div className="cart-prod-name">4Big Guys</div>
+                <div className="cart-prod-price">$225</div> 
+              </div>
+              <img src={closeLogo} className='remove-button' alt="" />
+            </div>
+            <div className="cart-product">
+              <img src={tempLink} alt="" className="cart-prod-img" />
+              <div className="prod-info flex column">
+                <div className="cart-prod-name">4Big Guys</div>
+                <div className="cart-prod-price">$225</div> 
+              </div>
+              <img src={closeLogo} className='remove-button' alt="" />
+            </div>
+            <div className="purchase-button cursor">Purchase</div>
           </div>
           <img className=" cursor invert"  src={cartInvert} />
         </div>
