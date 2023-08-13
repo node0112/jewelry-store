@@ -116,3 +116,25 @@
     background-color: var(--red);
     color: var(--black);
 }
+
+
+.close-animation{
+    animation-name: closeCart;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes closeCart {
+    0%{
+        transform: translateY(0px);
+    }
+    30%{
+        opacity: 1;
+        transform: translateY(100px);
+
+    }
+    100%{
+        opacity: 0;
+    }
+}

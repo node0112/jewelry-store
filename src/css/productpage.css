@@ -93,11 +93,13 @@
     width: 60vh;
     height: 60vh;
     object-fit: cover;
+    border-radius: 20px;
 }
 
 .view-container{
     gap: 70px;
     height: max-content;
+    width: 100vw;
 }
 .view-cart-button{
     padding: 10px;
@@ -123,4 +125,11 @@
 }
 .view-name{
     font-size: 60px;
+}
+
+#view-close{
+    width: 40px;
+    position: absolute;
+    right: 200px;
+    top: 20px;
 }

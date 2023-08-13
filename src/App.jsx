@@ -21,9 +21,12 @@ function App() {
   const [pageTitle, setPageTitle] = useState('')
   const [collectionName, setCollectionName] = useState('')
   const [productId, setProductId] = useState('')
-  const [locUser,setLocUser] = useState(null)
+  const [locUser,setLocUser] = useState('')
+
+  const [loading, setLoading] = useState(false)
 
   function signUp(email, password){
+    setLoading(true)
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -32,29 +35,36 @@ function App() {
         cart: [],
         orders: {}
       })
+      setLoading(false)
       navigate('/')
     })
     .catch((error) => {
+      setLoading(false)
       const errorMessage = error.message;
       console.log(errorMessage)
     });
   }
 
   function signOutUser(){
+    setLoading(true)
     signOut(auth).then(() => {
       console.log('signed-out')
       setLocUser(null)
+      setLoading(false)
     }).catch((error) => {
+      setLoading(false)
       const errorMessage = error.message
     });
   }
 
   function signIn(email, password){
+    setLoading(true)
     signInWithEmailAndPassword(auth, email, password).then(user =>{
       navigate('/')
       setLocUser(user)
-      console.log('called')
+      setLoading(false)
     }).catch(err =>{
+      setLoading(false)
       console.log(err.message)
     })
   }
@@ -113,13 +123,16 @@ function App() {
           ...doc.data(),
           id: doc.id
         })) //to get only the documents form th3e given data
-      return filteredDocs
+        setLoading(false)
+        return filteredDocs
       }
       catch (err){
+        setLoading(false)
         console.log(err)
       }
     }
     else{
+      setLoading(false)
       return 'err'
     }
   }
@@ -137,12 +150,12 @@ function App() {
 
   return(
     <>
-        <Header />
-        <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName} />
+        <Header removeFromCart={ removeFromCart } loading={loading} setLoading={setLoading}/>
+        <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName}  />
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProductId={setProductId} addToCart={addToCart} />  }/>
-          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} />} />
+          <Route path='/' element={<Home loading={loading} setLoading={setLoading} />} />
+          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProductId={setProductId} addToCart={addToCart} loading={loading} setLoading={setLoading} />  }/>
+          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} loading={loading} setLoading={setLoading} />} />
         </Routes>
         <div className="background-blur" onClick={closeSidebar}/>
         <Footer />

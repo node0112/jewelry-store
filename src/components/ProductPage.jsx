@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react'
 import '../css/productpage.css'
 import banner from '../assets/banner.png'
 
-function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHomepage }) {
+import closeLogo from '../assets/closecircle.svg'
+import Loader from './Loader'
+
+
+function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHomepage, loading, setLoading }) {
 
     //product view states
     const [price, setPrice] = useState('')
@@ -12,6 +16,7 @@ function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHo
 
 
     async function renderProducts(){
+        setLoading(true)
         const products = await getCollection()
         console.log(products)
         if(products !== 'err' ){ //check if there are produvts
@@ -84,6 +89,7 @@ function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHo
     <div style={{width: '100vw'}}>
         <img src={banner} alt="Top Banner" className="top-banner" />
         <div className="flex column products-wrapper" >
+        <Loader loading={loading}/>
             <div className="product-title"> {pageTitle} </div>
             <div className="products-container">
                 <div className="product-card">
@@ -95,6 +101,7 @@ function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHo
             </div>
         </div>
         <div className="product-view">
+        <Loader loading={loading}/>
             <div className="flex view-container">
                 <img src="" alt="product-image" id="product-view-image" />
                 <div className="flex column" style={{gap: '15px'}}>
@@ -102,7 +109,7 @@ function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHo
                     <div className="view-price defont">{price}</div>
                     <div className="view-description defont">{description}</div>
                     <div className="view-cart-button style-font" onClick={addToCart}>Add To Cart</div>
-                    <div id="view-close" onClick={()=>{setViewOpen(false)}}>Close</div>
+                    <img src={closeLogo} alt=""  id="view-close" className='cursor' onClick={()=>{setViewOpen(false)}}/>
                 </div>
             </div>
         </div>

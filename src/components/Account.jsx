@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
 import '../css/account.css'
 import hero from '../assets/images/acc-image.jpg'
+import Loader from './Loader'
 
-function Account({signUp, resetHomepage, signOut, signIn, locUser }) {
+function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setLoading }) {
 
     function getInputs(type){ //type signifies the type of sign in that has been chosen 
         let email, password
@@ -95,9 +96,10 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser }) {
             <div className="product-title" style={{marginLeft: '0'}}> Account </div>
             {locUser ? 
             <div>
+                 <Loader loading={loading}/>
                 <div className="flex" style={{gap: '35px', alignItems: 'flex-end'}}>
                     <label  className='defont' style={{fontSize: '35px'}} >Email: </label>
-                    <input type="email" minLength='5' id='email'  className='acc-inp' value={locUser.email}  disabled='true' style={{width: '200px'}} />
+                    <input type="email" minLength='5' id='email'  className='acc-inp' value={locUser.email}  disabled={true} style={{width: '200px'}} />
                     <button className='account-button styled-font' onClick={signOut}>Sign Out</button>
                 </div>
                 <div className="product-title" style={{marginLeft: '0', marginTop: '100px'}}> Orders </div>
@@ -127,17 +129,20 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser }) {
                 </div>
             </div> :  
             <div className='flex column' >
-                <div className="flex account-input-container" >
-                    <label htmlFor="email" className='defont' style={{fontSize: '35px'}} >Email:</label>
-                    <input type="email" id='email'  className='acc-inp' min='7' style={{width: '200px'}} />
-                </div>
-                <div className="flex account-input-container" >
-                    <label htmlFor="password" className='defont' style={{fontSize: '35px'}} >Password: </label>
-                    <input type="password" minLength='5' id='password' className='acc-inp'  style={{width: '200px'}} />
-                </div>
-                    <div className="flex" style={{gap: '30px'}}>
-                        <button className='account-button styled-font' onClick={()=>{getInputs('up')}}>Sign Up</button>
-                        <button className='account-button styled-font' onClick={()=>{getInputs('in')}}>Sign In</button>
+                <div>
+                <Loader loading={loading}/>
+                    <div className="flex account-input-container" >
+                        <label htmlFor="email" className='defont' style={{fontSize: '35px'}} >Email:</label>
+                        <input type="email" id='email'  className='acc-inp' min='7' style={{width: '200px'}} />
+                    </div>
+                    <div className="flex account-input-container" >
+                        <label htmlFor="password" className='defont' style={{fontSize: '35px'}} >Password: </label>
+                        <input type="password" minLength='5' id='password' className='acc-inp'  style={{width: '200px'}} />
+                    </div>
+                        <div className="flex" style={{gap: '30px'}}>
+                            <button className='account-button styled-font' onClick={()=>{getInputs('up')}}>Sign Up</button>
+                            <button className='account-button styled-font' onClick={()=>{getInputs('in')}}>Sign In</button>
+                    </div>
                 </div>
                 <img src={hero} id='acc-hero' />
             </div> 
