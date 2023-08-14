@@ -13,13 +13,12 @@ function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHome
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [viewOpen, setViewOpen] = useState(false)
-    
+
 
 
     async function renderProducts(){
         setLoading(true)
         const products = await getCollection()
-        console.log(products)
         if(products !== 'err' ){ //check if there are produvts
             products.forEach(product =>{
                 const card = document.createElement('div')

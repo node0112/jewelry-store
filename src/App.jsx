@@ -86,6 +86,7 @@ function App() {
         cart: arrayUnion(product) //array union function adds an item to the cart array without overwriting the whole document
       })
       console.log('done')
+      getCart()//updates cart locally 
     }
     else{
       navigate('/account')
@@ -93,10 +94,21 @@ function App() {
   }
 
   async function removeFromCart(id){ //called from the cart preview box on the top of the screen
-    const userDoc = doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
-    await updateDoc(userDoc, {
-      cart: arrayRemove(id)
-    })
+    let cartArrayCopy = cartArray
+    if(locUser){
+      let loc = 0
+      cartArrayCopy.forEach(product =>{
+        if(product.id === id) return; 
+        loc ++
+      })
+      cartArrayCopy.splice(loc, 1) //remove element from local array
+      setCartArray(cartArrayCopy) //update local array
+      const userDoc = doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
+      await updateDoc(userDoc, {
+        cart: cartArrayCopy
+      })
+      getCart()//show changes in cart locally
+    }
   }
 
   async function getCart(){ //get all products added to the cart
@@ -152,7 +164,7 @@ function App() {
   }
 
   useEffect(()=>{//gets current cart of the use if logged in
-    if(locUser.email) getCart()
+    if(locUser) getCart()
   }, [locUser])
 
   

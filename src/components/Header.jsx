@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 function Header({removeFromCart, cartArray}) {
   const navigate = useNavigate()
   gsap.registerPlugin(ScrollTrigger)
-  const tempLink = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&token=f8e0472f-b644-4641-94bf-0a93d38545f0'
+
 
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
@@ -52,11 +52,13 @@ function Header({removeFromCart, cartArray}) {
     axis: 'y'
   });
 
-  function handleCartArray() { //render products from the array to the cart container
+  async function handleCartArray() { //render products from the array to the cart container
+   
     if(cartArray.length > 0){
       cartArray.forEach(product => {
         renderCartProducts(product)
       })
+      handleCartPress() //opens the cart container to show that it has ben updated
     }
   }
 
@@ -94,7 +96,9 @@ function Header({removeFromCart, cartArray}) {
     img2.src = closeLogo;
     img2.className = 'remove-button';
     img2.alt = '';
-
+    img2.addEventListener('click', ()=>{
+      removeFromCart(product.id)
+    })
     // Append all created elements to cartProduct
     cartProduct.appendChild(img1);
     cartProduct.appendChild(prodInfo);
@@ -105,13 +109,15 @@ function Header({removeFromCart, cartArray}) {
 
   }
 
-  
+  function handleCartPress(){
+    if(cartArray.length > 0) setCartOpen(!cartOpen);
+        //else navigate('/account')
+  }
 
   useEffect(() => { //hide and show header
     const header = document.querySelector('.header')
     const logosOg = document.querySelectorAll('.uninvert')
     const logosInverted = document.querySelectorAll('.invert')
-    const cartContainer = document.querySelector('.cart-container')
 
     if (scrollDir === 'up') { //header has been scrolled into view
       header.style.top = '0px'
@@ -128,19 +134,10 @@ function Header({removeFromCart, cartArray}) {
       header.classList.remove('header-open')
       setCartOpen(false)
     }
-
-
-    //cart opening functionality
-    const cartButton = document.querySelectorAll('.cart')
-    cartButton.forEach(button => {
-      button.addEventListener('click', () => {
-        setCartOpen(cartOpen => !cartOpen)
-      })
-    })
-
   }, [scrollDir])
 
-  useEffect(() => {
+  useEffect(() => { //handles cart openuing and closing
+    console.log(cartOpen)
     const cartContainer = document.querySelector('.cart-container')
     if (cartOpen) {
       cartContainer.classList.remove('close-animation')
@@ -201,7 +198,8 @@ function Header({removeFromCart, cartArray}) {
   }, [])
 
   useEffect(()=>{ //renders cart when the user signs in and the array is recieved 
-    //if(cartArray.length > 0) handleCartArray()
+    console.log(cartArray)
+    handleCartArray()
   },[cartArray])
 
 
@@ -216,77 +214,12 @@ function Header({removeFromCart, cartArray}) {
           Wear Your Shine</div></div>
       <div className="right-header-nav header-nav flex">
         <div className="flex" style={{ gap: '10px', width: '30px' }}>
-          <img className="nav-link flex cursor uninvert cart" id="cart" src={cart} />
-          <div className="cart-container flex column">
-          <div className="cart-products-container flex column">
-            <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-              <div class="cart-product">
-                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
-                  <div class="prod-info flex column">
-                    <div class="cart-prod-name">230</div>
-                    <div class="cart-prod-price">230</div>
-                  </div>
-                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
-              </div>
-          </div>
+          <img className="nav-link flex cursor uninvert cart" id="cart" src={cart} onClick={handleCartPress}/>
+         <div className="cart-container flex column">
+          <div className="cart-products-container flex column"></div> 
             <div className="purchase-button cursor">Purchase</div>
-          </div>
-          <img className="cart cursor invert" src={cartInvert} />
+          </div> 
+          <img className="cart cursor invert" src={cartInvert} onClick={handleCartPress} />
         </div>
         <div className="flex" id='searchCont' style={{ gap: '10px', width: '30px' }}>
           <img className="nav-link flex cursor uninvert" onClick={searchAnimate} src={search} />
