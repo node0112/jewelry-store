@@ -53,12 +53,15 @@ function Header({removeFromCart, cartArray}) {
   });
 
   async function handleCartArray() { //render products from the array to the cart container
-   
+    const myNode = document.querySelector(".cart-products-container");
+    while (myNode.firstChild) {
+      myNode.removeChild(myNode.lastChild);
+    }
     if(cartArray.length > 0){
       cartArray.forEach(product => {
         renderCartProducts(product)
       })
-      handleCartPress() //opens the cart container to show that it has ben updated
+      setCartOpen(true) //opens the cart container to show that it has ben updated
     }
   }
 
@@ -200,6 +203,9 @@ function Header({removeFromCart, cartArray}) {
   useEffect(()=>{ //renders cart when the user signs in and the array is recieved 
     console.log(cartArray)
     handleCartArray()
+    if(cartArray.length === 0){
+      setCartOpen(false)
+    }
   },[cartArray])
 
 

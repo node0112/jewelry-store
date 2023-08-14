@@ -48,8 +48,9 @@ function  Home() {
       })
     })
     //show home text if header animation is complete
-    const logo = document.querySelector('.logo')
-    if(logo.style.paddingTop == '0') document.querySelector('.home-main-text').style.opacity = '1'
+    const logoSubText = document.querySelector('.logo-subtext')
+    if(logoSubText.style.opacity == '0') document.querySelector('.home-main-text').style.opacity = '1'
+
 
   },[])
 
