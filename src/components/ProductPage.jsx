@@ -6,13 +6,14 @@ import closeLogo from '../assets/closecircle.svg'
 import Loader from './Loader'
 
 
-function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHomepage, loading, setLoading }) {
+function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHomepage, loading, setLoading }) {
 
     //product view states
     const [price, setPrice] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
     const [viewOpen, setViewOpen] = useState(false)
+    
 
 
     async function renderProducts(){
@@ -56,12 +57,12 @@ function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHo
         }
     }
 
-    function renderView(product){ //sets the variables for the indivudal viewing of products
+    function renderView(product){ //sets the variables for the indivudal viewing of products and updates chosen product
         setPrice('$' + product.price)
         setName(product.name)
         setDescription(product.description)
         document.getElementById('product-view-image').src = product.image
-        setProductId(product.id) //sets product id to  a variable so that it can be added to cart directly
+        setProduct(product) //sets product id to  a variable so that it can be added to cart directly
         setViewOpen(true)
     }
 
@@ -108,7 +109,7 @@ function ProductPage({getCollection, pageTitle, setProductId, addToCart, resetHo
                     <div className="view-name style-font">{name}</div>
                     <div className="view-price defont">{price}</div>
                     <div className="view-description defont">{description}</div>
-                    <div className="view-cart-button style-font" onClick={addToCart}>Add To Cart</div>
+                    <div className="view-cart-button style-font" onClick={()=>{addToCart()}}>Add To Cart</div>
                     <img src={closeLogo} alt=""  id="view-close" className='cursor' onClick={()=>{setViewOpen(false)}}/>
                 </div>
             </div>

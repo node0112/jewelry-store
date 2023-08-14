@@ -7,10 +7,10 @@ import Footer from './components/Footer'
 import Sidebar from './components/Sidebar'
 import ProductPage from './components/ProductPage'
 import { db } from './firebase'
-import { getDocs, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, arrayRemove  } from "firebase/firestore"; 
+import { getDocs, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, arrayRemove, getDoc  } from "firebase/firestore"; 
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
-import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
+import {  Routes, Route, useNavigate } from 'react-router-dom'
 import Account from './components/Account'
 
 function App() {
@@ -20,8 +20,9 @@ function App() {
 
   const [pageTitle, setPageTitle] = useState('')
   const [collectionName, setCollectionName] = useState('')
-  const [productId, setProductId] = useState('')
+  const [product, setProduct] = useState('')
   const [locUser,setLocUser] = useState('')
+  const [cartArray, setCartArray] = useState([])
 
   const [loading, setLoading] = useState(false)
 
@@ -80,8 +81,9 @@ function App() {
   async function addToCart(){
     if(locUser){
       const userDoc = doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
+      console.log(product)
       await updateDoc(userDoc, {
-        cart: arrayUnion(productId) //array union function adds an item to the cart array without overwriting the whole document
+        cart: arrayUnion(product) //array union function adds an item to the cart array without overwriting the whole document
       })
       console.log('done')
     }
@@ -98,13 +100,13 @@ function App() {
   }
 
   async function getCart(){ //get all products added to the cart
-    if(locUser){
-      const userDoc = doc(db, 'userCart', user.email)
+    if(locUser){ //secondary check
+      const userDoc = await  getDoc(doc(db, 'userCart', locUser.email))
       const data = userDoc.data()
-      console.log(data.cart)
+      if(data.cart) setCartArray(data.cart)
     }
   }
-
+  
 
   function resetHomepage(){ //ued to resize header and make subtext Appear on the homepage
     const logo = document.querySelector('.logo')
@@ -122,7 +124,7 @@ function App() {
       const filteredDocs  = data.docs.map((doc)=>({
           ...doc.data(),
           id: doc.id
-        })) //to get only the documents form th3e given data
+        })) //to get only the documents form the given data
         setLoading(false)
         return filteredDocs
       }
@@ -137,6 +139,7 @@ function App() {
     }
   }
 
+ 
   function closeSidebar(){
     const sidebar = document.querySelector('.sidebar')
     sidebar.style.left = '-500px'
@@ -148,13 +151,19 @@ function App() {
     document.querySelector('body').style.overflowY = 'auto'
   }
 
+  useEffect(()=>{//gets current cart of the use if logged in
+    if(locUser.email) getCart()
+  }, [locUser])
+
+  
+
   return(
     <>
-        <Header removeFromCart={ removeFromCart } loading={loading} setLoading={setLoading}/>
+        <Header removeFromCart={ removeFromCart } loading={loading} setLoading={setLoading} cartArray={cartArray} />
         <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName}  />
         <Routes>
           <Route path='/' element={<Home loading={loading} setLoading={setLoading} />} />
-          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProductId={setProductId} addToCart={addToCart} loading={loading} setLoading={setLoading} />  }/>
+          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProduct={setProduct} addToCart={addToCart} loading={loading} setLoading={setLoading} />  }/>
           <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} loading={loading} setLoading={setLoading} />} />
         </Routes>
         <div className="background-blur" onClick={closeSidebar}/>

@@ -14,7 +14,7 @@ import searchInvert from '../assets/search-invert.svg'
 import closeLogo from '../assets/closecircle.svg'
 import { useNavigate } from 'react-router-dom';
 
-function Header({removeFromCart}) {
+function Header({removeFromCart, cartArray}) {
   const navigate = useNavigate()
   gsap.registerPlugin(ScrollTrigger)
   const tempLink = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&token=f8e0472f-b644-4641-94bf-0a93d38545f0'
@@ -52,14 +52,14 @@ function Header({removeFromCart}) {
     axis: 'y'
   });
 
-  function handleCartArray(cartArray) { //render products from the array to the cart container
-
+  function handleCartArray() { //render products from the array to the cart container
     if(cartArray.length > 0){
       cartArray.forEach(product => {
         renderCartProducts(product)
       })
     }
   }
+
   function renderCartProducts(product) { //generated w chat gpt but I revised and updated the code
     // Create div element with className "cart-product"
     const cartProduct = document.createElement('div');
@@ -78,7 +78,7 @@ function Header({removeFromCart}) {
     // Create div element for product name
     const prodName = document.createElement('div');
     prodName.className = 'cart-prod-name';
-    prodName.textContent = product.price
+    prodName.textContent = product.name
 
     // Create div element for product price
     const prodPrice = document.createElement('div');
@@ -101,7 +101,7 @@ function Header({removeFromCart}) {
     cartProduct.appendChild(img2);
 
     // Append cartProduct to the desired location in the DOM
-    document.querySelector('.cart-container').appendChild(cartProduct);
+    document.querySelector('.cart-products-container').appendChild(cartProduct);
 
   }
 
@@ -126,8 +126,7 @@ function Header({removeFromCart}) {
     else { //header has been closed
       header.style.top = '-200px'
       header.classList.remove('header-open')
-      cartContainer.classList.add('close-animation')
-      setCartOpen(cartOpen => false)
+      setCartOpen(false)
     }
 
 
@@ -144,10 +143,10 @@ function Header({removeFromCart}) {
   useEffect(() => {
     const cartContainer = document.querySelector('.cart-container')
     if (cartOpen) {
-      cartContainer.classList.add('close-animation')
-    }
-    else {
       cartContainer.classList.remove('close-animation')
+    }
+    else if(!cartOpen){
+      cartContainer.classList.add('close-animation')
     }
   }, [cartOpen])
 
@@ -201,6 +200,9 @@ function Header({removeFromCart}) {
 
   }, [])
 
+  useEffect(()=>{ //renders cart when the user signs in and the array is recieved 
+    //if(cartArray.length > 0) handleCartArray()
+  },[cartArray])
 
 
   return (
@@ -216,30 +218,72 @@ function Header({removeFromCart}) {
         <div className="flex" style={{ gap: '10px', width: '30px' }}>
           <img className="nav-link flex cursor uninvert cart" id="cart" src={cart} />
           <div className="cart-container flex column">
-            <div className="cart-product">
-              <img src={tempLink} alt="" className="cart-prod-img" />
-              <div className="prod-info flex column">
-                <div className="cart-prod-name">4Big Guys</div>
-                <div className="cart-prod-price">$225</div>
+          <div className="cart-products-container flex column">
+            <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
               </div>
-              <img src={closeLogo} className='remove-button' alt="" />
-            </div>
-            <div className="cart-product">
-              <img src={tempLink} alt="" className="cart-prod-img" />
-              <div className="prod-info flex column">
-                <div className="cart-prod-name">4Big Guys</div>
-                <div className="cart-prod-price">$225</div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
               </div>
-              <img src={closeLogo} className='remove-button' alt="" />
-            </div>
-            <div className="cart-product">
-              <img src={tempLink} alt="" className="cart-prod-img" />
-              <div className="prod-info flex column">
-                <div className="cart-prod-name">4Big Guys</div>
-                <div className="cart-prod-price">$225</div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
               </div>
-              <img src={closeLogo} className='remove-button' alt="" />
-            </div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
+              </div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
+              </div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
+              </div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
+              </div>
+              <div class="cart-product">
+                  <img src="https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/andrew-hutchings-Asngw4A5_tM-unsplash-2.jpg?alt=media&amp;token=f8e0472f-b644-4641-94bf-0a93d38545f0" alt="Product Image" class="cart-prod-img" />
+                  <div class="prod-info flex column">
+                    <div class="cart-prod-name">230</div>
+                    <div class="cart-prod-price">230</div>
+                  </div>
+                  <img src="/src/assets/closecircle.svg" class="remove-button" alt="" />
+              </div>
+          </div>
             <div className="purchase-button cursor">Purchase</div>
           </div>
           <img className="cart cursor invert" src={cartInvert} />

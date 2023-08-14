@@ -73,6 +73,11 @@
     color: var(--black);
     box-shadow: 0 5px 20px gray;
     border-radius: 20px;
+    max-height: 400px;
+}
+.cart-products-container{
+    max-height: 300px;
+    overflow: scroll;
     gap: 20px;
 }
 .cart-product{
@@ -94,12 +99,13 @@
 }
 .cart-prod-name{
     font-size: 25px;
+    width: 250px;
 }
 .remove-button{
     width: 30px;
     height: 30px;
     cursor: pointer;
-    margin-left: 40%;
+
 }
 .purchase-button{
     border-radius: 5px;
