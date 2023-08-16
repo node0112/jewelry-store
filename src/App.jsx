@@ -7,7 +7,7 @@ import Footer from './components/Footer'
 import Sidebar from './components/Sidebar'
 import ProductPage from './components/ProductPage'
 import { db } from './firebase'
-import { getDocs, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, arrayRemove, getDoc  } from "firebase/firestore"; 
+import { getDocs, collection, addDoc, setDoc, doc, updateDoc, arrayUnion, arrayRemove, getDoc, orderBy  } from "firebase/firestore"; 
 import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "firebase/auth";
 
 import {  Routes, Route, useNavigate } from 'react-router-dom'
@@ -34,7 +34,7 @@ function App() {
       //create a cart document in the user collection for storing all items in cart
       setDoc(doc(db,'userCart', user.email), {
         cart: [],
-        orders: {}
+        orders: []
       })
       setLoading(false)
       navigate('/')
@@ -103,7 +103,7 @@ function App() {
       })
       cartArrayCopy.splice(loc, 1) //remove element from local array
       setCartArray(cartArrayCopy) //update local array
-      const userDoc = doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
+      const userDoc = await doc(db, 'userCart', locUser.email) //find ref to the doc that we are adding the product id to 
       await updateDoc(userDoc, {
         cart: cartArrayCopy
       })
@@ -118,6 +118,50 @@ function App() {
       if(data.cart) setCartArray(data.cart)
     }
   }
+
+  async function purchaseItems(){
+    setLoading(true)
+    //update orders array and then show order screen 
+    const docRef = doc(db, 'userCart', locUser.email)
+    const userDoc =  await  getDoc(docRef) //find ref to the doc that we are adding the product id to 
+    const data = userDoc.data()
+    let preExistingOrders = data.orders //this will be concanted using the current cart array
+    const localOrdersArray = (cartArray) //to add all items from the cart to the local order array 
+    localOrdersArray.forEach(order =>{ //add a date to each one of the orders in the local array 
+      const newDate = new Date()
+      order.date = newDate //add date field to the object 
+    })
+    console.log(preExistingOrders)
+    console.log(localOrdersArray)
+    preExistingOrders = preExistingOrders.concat(localOrdersArray) //add all cart items into array, this will be done in after payment after payment in the real world 
+    console.log(preExistingOrders)
+    await setDoc(docRef, {
+      cart: [], //the cart array is emptied to impy the succes of an order
+      orders: preExistingOrders
+    }).then(()=>{
+      setLoading(false)
+      //animation
+      const successContainer = document.querySelector('.success-container')
+      const logo = document.getElementById('success-logo')
+      successContainer.style.zIndex = '9'
+      successContainer.style.opacity = '1'
+      logo.classList.add("success-animation")
+      setTimeout(() => {
+        getCart()//updates cart locally to match the emptied cart
+      }, 1000);
+      setTimeout(() => {
+        successContainer.style.opacity = '0'
+        setTimeout(() => {
+          successContainer.style.zIndex = '-1'
+        }, 500); //another timeout for opacity animation
+        logo.classList.remove("success-animation")
+      }, 3000);
+      //animation end
+    }).catch(err =>{
+      setLoading(false)
+      console.log(err)
+    })
+  }
   
 
   function resetHomepage(){ //ued to resize header and make subtext Appear on the homepage
@@ -127,8 +171,8 @@ function App() {
     logo.style.fontSize = '50px'
     document.querySelector('.logo-subtext').style.opacity = '0'
     }
-
   
+   
 
   async function getCollection(){
   if(collectionName){
@@ -171,7 +215,7 @@ function App() {
 
   return(
     <>
-        <Header removeFromCart={ removeFromCart } loading={loading} setLoading={setLoading} cartArray={cartArray} />
+        <Header removeFromCart={ removeFromCart } loading={loading} cartArray={cartArray} purchaseItems={purchaseItems}  />
         <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName}  />
         <Routes>
           <Route path='/' element={<Home loading={loading} setLoading={setLoading} />} />

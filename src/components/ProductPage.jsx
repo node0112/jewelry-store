@@ -89,8 +89,8 @@ function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHome
     <div style={{width: '100vw'}}>
         <img src={banner} alt="Top Banner" className="top-banner" />
         <div className="flex column products-wrapper" >
-        <Loader loading={loading}/>
             <div className="product-title"> {pageTitle} </div>
+            <Loader loading={loading}/>
             <div className="products-container">
                 <div className="product-card">
                  <div class="product-name">24K Gold</div><div class="product-price">$200</div><img class="product-image" src="" />

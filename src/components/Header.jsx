@@ -12,9 +12,12 @@ import cartInvert from '../assets/cart-invert.svg'
 import search from '../assets/search.svg'
 import searchInvert from '../assets/search-invert.svg'
 import closeLogo from '../assets/closecircle.svg'
+import done from '../assets/done.svg'
 import { useNavigate } from 'react-router-dom';
+import Loader from './Loader';
 
-function Header({removeFromCart, cartArray}) {
+
+function Header({removeFromCart, cartArray, purchaseItems, loading}) {
   const navigate = useNavigate()
   gsap.registerPlugin(ScrollTrigger)
 
@@ -219,11 +222,15 @@ function Header({removeFromCart, cartArray}) {
         <div className="logo-subtext">
           Wear Your Shine</div></div>
       <div className="right-header-nav header-nav flex">
-        <div className="flex" style={{ gap: '10px', width: '30px' }}>
+        <div className="flex" style={{ gap: '10px', width: '30px', position: 'relative' }}>
           <img className="nav-link flex cursor uninvert cart" id="cart" src={cart} onClick={handleCartPress}/>
          <div className="cart-container flex column">
+          <Loader loading={loading}/>
+          <div className="success-container flex vertical horizontal">
+            <img src={done} alt="" id="success-logo" />
+          </div>
           <div className="cart-products-container flex column"></div> 
-            <div className="purchase-button cursor">Purchase</div>
+            <div className="purchase-button cursor" onClick={purchaseItems}>Purchase</div>
           </div> 
           <img className="cart cursor invert" src={cartInvert} onClick={handleCartPress} />
         </div>
