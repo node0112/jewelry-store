@@ -113,7 +113,7 @@ function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHome
                     <div className="view-name style-font">{name}</div>
                     <div className="view-price defont">{price}</div>
                     <div className="view-description defont">{description}</div>
-                    <div className="view-cart-button style-font" onClick={()=>{handleViewCart()}}>Add To Cart</div>
+                    <div className="view-cart-button style-font cursor" onClick={()=>{handleViewCart()}}>Add To Cart</div>
                     <img src={closeLogo} alt=""  id="view-close" className='cursor' onClick={()=>{setViewOpen(false)}}/>
                 </div>
             </div>

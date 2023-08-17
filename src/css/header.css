@@ -18,7 +18,7 @@
     display: none;
 }
 .logo{
-    font-family: 'glamor';
+    font-family: 'glamor', serif;
     margin: auto;
     font-size: 150px;
     padding-top: 35vh;

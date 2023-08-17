@@ -3,7 +3,7 @@
 
 @font-face {
   font-family: 'glamor';
-  src: url('../assets/Glamor-Medium.ttf');
+  src: url("./assets//fonts/Glamor-Medium.ttf");
 }
 
 :root{
