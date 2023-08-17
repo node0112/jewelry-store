@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react'
 import bgVideo  from '../assets/bgVid.mp4'
 import '../css/home.css'
 import arrow from '../assets/arrow.svg'
-import earrings from '../assets/images/earrings.jpg'
-import bracelets from '../assets/images/bracelets.jpg'
 
 function  Home() {
 
   const [sliderPos, setSliderPos] = useState(0) 
-  const [barCount, setbarCount] = useState(0)
-  const [barPosition, setBarPosition] = useState('')
   const [cardID, setCardID] = useState(1) //used to make other cards not in view have a opacity of 0.5
   const [currMargin, setCurrMargin] = useState(0)
 
-
+  //image links
+  const bracelets = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/images%2Fbracelets.jpg?alt=media&token=e641e5d5-e4e7-450c-984d-52510afebdf3'
+  const earrings = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/images%2Fearrings.jpg?alt=media&token=03f7f8f3-18e1-4167-bdb9-fb1796625573'
+  const necklaceHero = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/images%2Fnecklace.jpg?alt=media&token=4efc6639-ca31-44ed-9cd3-ab04a5afc016'
+  const giftHero = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/images%2Fgifts.jpg?alt=media&token=eac4f1cd-132a-454a-89fd-9ac2b2bb82c3'
 
   async function slide(action){
     document.querySelector('.card-in-view').classList.remove('card-in-view') //make current card slightly less opaque
@@ -65,14 +65,16 @@ function  Home() {
         </div>
         <section className='home-section flex padding' style={{marginTop: '100vh',justifyContent: 'space-evenly'}}>
           <div className="home-card flex">
+            <img src={necklaceHero} className='home-hero-image' alt="" />
             <div className="cta-container">
-              <div className="cta-info" style={{color: 'white'}}>Necklaces For Her</div>
+              <div className="cta-info" >Necklaces For Her</div>
               <div className="cta-button cursor" id='cta1'>Explore Collection</div>
             </div>
           </div>
           <div className="home-card flex ">
+            <img src={giftHero} className='home-hero-image' alt="" />
             <div className="cta-container">
-              <div className="cta-info">For Someone Special,</div>
+              <div className="cta-info" style={{color: 'white'}}>For Someone Special,</div>
               <div className="cta-button cursor" id='cta2'>Send a gift</div>
             </div>
           </div>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../css/account.css'
-import hero from '../assets/images/acc-image.jpg'
 import Loader from './Loader'
 
 function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, ordersArray }) {
 
     const [noOrders,setNoOrders] = useState(true)
-
+    const hero = 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/images%2Facc-image.jpg?alt=media&token=8541699d-2c90-49ca-aa03-e7cbdaa74a0f'
     function getInputs(type){ //type signifies the type of sign in that has been chosen 
         let email, password
         email = document.getElementById('email').value
