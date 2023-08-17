@@ -34,7 +34,7 @@
 
 /* order styling  */
 .order{
-    width: 100%;
+    width: 95%;
     height: 120px;
     border: 3px solid transparent;
     padding: 15px;
@@ -80,4 +80,10 @@
 .paid-status{
     color: yellowgreen;
     font-family: 'poppins', sans-serif;
+}
+
+#no-orders{
+    font-size: 30px;
+    margin-left: 5px;
+    color: var(--gray);
 }

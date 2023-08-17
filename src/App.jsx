@@ -23,6 +23,7 @@ function App() {
   const [product, setProduct] = useState('')
   const [locUser,setLocUser] = useState('')
   const [cartArray, setCartArray] = useState([])
+  const [ordersArray, setOrdersArray] = useState([])
 
   const [loading, setLoading] = useState(false)
 
@@ -111,11 +112,12 @@ function App() {
     }
   }
 
-  async function getCart(){ //get all products added to the cart
+  async function getCart(){ //get all products added to the cart as well as orders as they are in the same response
     if(locUser){ //secondary check
       const userDoc = await  getDoc(doc(db, 'userCart', locUser.email))
       const data = userDoc.data()
       if(data.cart) setCartArray(data.cart)
+      if(data.orders) setOrdersArray(data.orders)
     }
   }
 
@@ -215,12 +217,12 @@ function App() {
 
   return(
     <>
-        <Header removeFromCart={ removeFromCart } loading={loading} cartArray={cartArray} purchaseItems={purchaseItems}  />
+        <Header removeFromCart={ removeFromCart } loading={loading} cartArray={cartArray} purchaseItems={purchaseItems} />
         <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName}  />
         <Routes>
           <Route path='/' element={<Home loading={loading} setLoading={setLoading} />} />
           <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProduct={setProduct} addToCart={addToCart} loading={loading} setLoading={setLoading} />  }/>
-          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} loading={loading} setLoading={setLoading} />} />
+          <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} loading={loading} setLoading={setLoading}  ordersArray={ordersArray} />} />
         </Routes>
         <div className="background-blur" onClick={closeSidebar}/>
         <Footer />

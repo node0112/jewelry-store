@@ -65,6 +65,11 @@ function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHome
         setViewOpen(true)
     }
 
+    async function handleViewCart(){
+        await addToCart()
+        setViewOpen(false)
+    }
+
     useEffect(()=>{ //incase gsap messes up the animation, this is the backup code
         resetHomepage()
     },[])
@@ -108,7 +113,7 @@ function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHome
                     <div className="view-name style-font">{name}</div>
                     <div className="view-price defont">{price}</div>
                     <div className="view-description defont">{description}</div>
-                    <div className="view-cart-button style-font" onClick={()=>{addToCart()}}>Add To Cart</div>
+                    <div className="view-cart-button style-font" onClick={()=>{handleViewCart()}}>Add To Cart</div>
                     <img src={closeLogo} alt=""  id="view-close" className='cursor' onClick={()=>{setViewOpen(false)}}/>
                 </div>
             </div>

@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/account.css'
 import hero from '../assets/images/acc-image.jpg'
 import Loader from './Loader'
 
-function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setLoading }) {
+function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, ordersArray }) {
+
+    const [noOrders,setNoOrders] = useState(true)
 
     function getInputs(type){ //type signifies the type of sign in that has been chosen 
         let email, password
@@ -16,32 +18,33 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setL
         }
     }
 
-    function rendersOrders(orders){
+    function rendersOrders(orders){ //follows same pattern as the cart array
         let count = 0
         orders.forEach(order => { //sub divisions are grouped together to avoid confusion
             count++
             const orderElem = document.createElement('div')
             orderElem.classList.add('order')
-            if(count % 2 !== 0){//makes every alternate order gray color
+            if(count % 2 !== 0 && count!== 0){//makes every alternate order gray color
                 orderElem.style.backgroundColor= '#D9D9D9'
             }
-        
 
             const subDiv = document.createElement('div')
             subDiv.classList.add('flex')
             const orderImg = document.createElement('img')
-            img.src = order.image
+            orderImg.src = order.image
+            orderImg.classList.add("order-img")
             const detailsContainer = document.createElement('div')
             detailsContainer.classList.add('order-details-container')
             const detailsSubContainer =  document.createElement('div') //many sub containers for styling
             const orderName = document.createElement('div')
             orderName.classList.add('order-name')
-            orderName.textContent = order.productName
+            orderName.textContent = order.name
             const orderID = document.createElement('div')
             orderID.classList.add('order-id')
-            orderID.textContent = order.id
+            orderID.textContent = '#' + order.id
             const orderDate = document.createElement('div')
-            orderDate.textContent = order.date
+            const dateFormatted = order.date.toDate().toDateString()
+            orderDate.textContent = dateFormatted
 
             detailsSubContainer.appendChild(orderName)
             detailsSubContainer.appendChild(orderID)
@@ -56,7 +59,7 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setL
             priceContainer.classList.add('price-container')
             const price = document.createElement('div')
             price.classList.add('price')
-            price.textContent = order.price
+            price.textContent = '$' + order.price
             const paymentStat = document.createElement('div')
             paymentStat.classList.add('paid-status')
             paymentStat.textContent = order.paymentStatus
@@ -67,7 +70,7 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setL
             orderElem.appendChild(subDiv)
             orderElem.appendChild(priceContainer)
 
-            document.querySelector('.orders-container').appendChild(order)
+            document.querySelector('.orders-container').appendChild(orderElem)
         });
     }
     useEffect(()=>{
@@ -90,9 +93,16 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setL
             header.style.borderBottom= 'none'
         }
     },[])
+    useEffect(()=>{
+        if(ordersArray.length > 0){
+            setNoOrders(false)
+            rendersOrders(ordersArray) //render orders if the length
+        } 
+        else setNoOrders(true)
+    },[ordersArray])
 
   return (
-        <div style={{height: '100vh', marginTop: '20vh', gap: '50px', padding: 'var(--padding)'}} className='flex column'>
+        <div style={{minHeight: '100vh', marginTop: '20vh', gap: '50px', padding: 'var(--padding)'}} className='flex column'>
             <div className="product-title" style={{marginLeft: '0'}}> Account </div>
             {locUser ? 
             <div>
@@ -104,28 +114,7 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, setL
                 </div>
                 <div className="product-title" style={{marginLeft: '0', marginTop: '100px'}}> Orders </div>
                 <div className="orders-container">
-                    <div className="order" style={{backgroundColor: '#D9D9D9'}}>
-                        <div className='flex'>
-                            <img src="" alt="" className="order-img" />
-                            <div className='order-details-container'>
-                                <div>
-                                    <div className="order-name">Name of di product</div>
-                                    <div className="order-id">#345rtgh</div>
-                                </div>
-                                <div className="order-date">20th August, 2023</div>
-                            </div>
-                        </div>
-                        <div className="price-container">
-                            <div className="price">$230</div>
-                            <div className="paid-status">Paid</div>
-                        </div>
-                    </div>
-                    <div className="order">
-
-                    </div>
-                    <div className="order"  style={{backgroundColor: '#D9D9D9'}} >
-
-                    </div>
+                    {noOrders ? <div id='no-orders' className='defont'>You Have No Previous Orders</div> : null}
                 </div>
             </div> :  
             <div className='flex column' >
