@@ -4,7 +4,7 @@ import arrow from '../assets/arrowback.svg'
 import deco from '../assets/sidebar-deco.svg'
 import { useNavigate } from 'react-router-dom'
 
-function Sidebar({closeSidebar,setPageTitle, setCollectionName}){
+function Sidebar({closeSidebar,setPageTitle, setCollectionName, setProductHero}){
 
   const [drawerOpen, setDrawerOpen] = useState(false)
   const navigate = useNavigate()
@@ -40,9 +40,10 @@ function Sidebar({closeSidebar,setPageTitle, setCollectionName}){
     })
   },[])
 
-  async function openProductPage(title, collection){
+  async function openProductPage(title, collection, heroImage){
     await setCollectionName(collection) //update collection name first since product page refreshes data when the collection changes by calling the getProducts function from app
     await setPageTitle(title)
+    await setProductHero(heroImage)
     navigate('/products')
     setTimeout(() => {
       closeSidebar()
@@ -72,11 +73,10 @@ function Sidebar({closeSidebar,setPageTitle, setCollectionName}){
               </div>
               <div id="collections" className="sidebar-drawer">
                 <div className="drawer-title">Collections</div>
-                <div className="drawer-link" onClick={()=>{openProductPage('Rings & Earrings', 'rings')}}>Rings & Earrings</div>
-                <div className="drawer-link" onClick={()=>{openProductPage('Bracelets', 'bracelets')}}>Bracelets</div>
-                <div className="drawer-link" onClick={()=>{openProductPage('Watches', 'watches')}}>Watches</div>
-                <div className="drawer-link" onClick={()=>{openProductPage('Necklaces', 'necklaces')}}>Necklaces</div>
-                <div className="drawer-link" onClick={()=>{openProductPage('Cuff Links', 'cuff_links')}}>Cuff Links</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Rings & Earrings', 'rings', 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/banner.png?alt=media&token=914f00d2-54f7-4d64-acdb-95ba559a392e')}}>Rings & Earrings</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Bracelets', 'bracelets', '')}}>Bracelets</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Necklaces', 'necklaces', 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/necklace-hero.jpg?alt=media&token=c461d430-dedf-45c4-88ea-5bd1452966c3')}}>Necklaces</div>
+                <div className="drawer-link" onClick={()=>{openProductPage('Cuff Links', 'cuff_links', 'https://firebasestorage.googleapis.com/v0/b/earhart-jewelry.appspot.com/o/cuff-links-hero.jpg?alt=media&token=57175d69-e135-41ed-b280-3432ad4da8f9')}}>Cuff Links</div>
               </div>
               <div id="designers" className="sidebar-drawer">
                 <div className="drawer-title">Our Designers</div>

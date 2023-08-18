@@ -101,7 +101,7 @@ function Account({signUp, resetHomepage, signOut, signIn, locUser, loading, orde
     },[ordersArray])
 
   return (
-        <div style={{minHeight: '100vh', marginTop: '20vh', gap: '50px', padding: 'var(--padding)'}} className='flex column'>
+        <div style={{minHeight: '80vh', marginTop: '20vh', gap: '50px', padding: 'var(--padding)'}} className='flex column'>
             <div className="product-title" style={{marginLeft: '0'}}> Account </div>
             {locUser ? 
             <div>

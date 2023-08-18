@@ -24,6 +24,7 @@ function App() {
   const [locUser,setLocUser] = useState('')
   const [cartArray, setCartArray] = useState([])
   const [ordersArray, setOrdersArray] = useState([])
+  const [productHero, setProductHero] = useState('') //set to the link of the hero image
 
   const [loading, setLoading] = useState(false)
 
@@ -218,10 +219,10 @@ function App() {
   return(
     <>
         <Header removeFromCart={ removeFromCart } loading={loading} cartArray={cartArray} purchaseItems={purchaseItems} />
-        <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName}  />
+        <Sidebar closeSidebar={closeSidebar} setPageTitle={setPageTitle} setCollectionName={setCollectionName} setProductHero={setProductHero} />
         <Routes>
           <Route path='/' element={<Home loading={loading} setLoading={setLoading} />} />
-          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProduct={setProduct} addToCart={addToCart} loading={loading} setLoading={setLoading} />  }/>
+          <Route path='/products' element={<ProductPage getCollection={getCollection} resetHomepage={resetHomepage} pageTitle={pageTitle} setProduct={setProduct} productHero={productHero} addToCart={addToCart} loading={loading} setLoading={setLoading} />  }/>
           <Route path='/account' element={<Account signUp={signUp} resetHomepage={resetHomepage} signOut={signOutUser} signIn={signIn} locUser={locUser} loading={loading} setLoading={setLoading}  ordersArray={ordersArray} />} />
         </Routes>
         <div className="background-blur" onClick={closeSidebar}/>

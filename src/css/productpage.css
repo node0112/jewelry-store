@@ -120,8 +120,9 @@
     color: var(--gray);
 }
 .view-description{
-    font-size: 30px;
-    color: var(--gray);
+    font-size: 20px;
+    color: rgb(199, 199, 199);
+    max-width: 65%;
 }
 .view-name{
     font-size: 60px;

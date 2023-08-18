@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import '../css/productpage.css'
-import banner from '../assets/banner.png'
 
 import closeLogo from '../assets/closecircle.svg'
 import Loader from './Loader'
 
 
-function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHomepage, loading, setLoading }) {
+function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHomepage, loading, setLoading, productHero }) {
 
     //product view states
     const [price, setPrice] = useState('')
@@ -92,7 +91,7 @@ function ProductPage({getCollection, pageTitle, setProduct, addToCart, resetHome
     
   return (
     <div style={{width: '100vw'}}>
-        <img src={banner} alt="Top Banner" className="top-banner" />
+        <img src={productHero} alt="Top Banner" className="top-banner" />
         <div className="flex column products-wrapper" >
             <div className="product-title"> {pageTitle} </div>
             <Loader loading={loading}/>
